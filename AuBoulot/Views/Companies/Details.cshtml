@@ -1,0 +1,77 @@
+﻿@model AuBoulot.Web.Models.Company
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SimpleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SimpleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WebSite)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WebSite)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div><h4>Job Opportunities Infomation</h4>
+ <a asp-action="Create" asp-controller="JobOpportunities" asp-route-companyId="@Model.Id" asp-route-companyName="@Model.SimpleName">Add New Job Opportunity</a></div>
+@if (Model.JobOpportunityList.Count > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.JobOpportunityList.FirstOrDefault().Title)</th>
+            <th>@Html.DisplayNameFor(model => model.JobOpportunityList.FirstOrDefault().MinSalary)</th>
+            <th>@Html.DisplayNameFor(model => model.JobOpportunityList.FirstOrDefault().MaxSalary)</th>
+            <th>@Html.DisplayNameFor(model => model.JobOpportunityList.FirstOrDefault().Rating)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var jobOpp in Model.JobOpportunityList)
+        {
+        <tr>
+            <td>@Html.DisplayFor(item => jobOpp.Title)</td>
+            <td>@Html.DisplayFor(item => jobOpp.MinSalary)</td>
+            <td>@Html.DisplayFor(item => jobOpp.MaxSalary)</td>
+            <td>@Html.DisplayFor(item => jobOpp.Rating)</td>
+            <td>
+                <a asp-controller="JobOpportunities" asp-action="Edit" asp-route-id="@jobOpp.Id">Edit</a> |
+                <a asp-controller="JobOpportunities" asp-action="Details" asp-route-id="@jobOpp.Id">Details</a> |
+                <a asp-controller="JobOpportunities" asp-action="Delete" asp-route-id="@jobOpp.Id">Delete</a>
+            </td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+}else
+{
+    <h3>No Job Opportunity</h3>
+}
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
